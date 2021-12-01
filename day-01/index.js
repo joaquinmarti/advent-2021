@@ -1,3 +1,4 @@
+const assert = require('assert/strict');
 const fs = require('fs');
 
 function readyInput() {
@@ -10,7 +11,7 @@ function readyInput() {
 
 //
 
-function calcA(input) {
+function solve1(input) {
   return input.reduce((counter, depth, index, depths) => {
     const prevDepth = depths[index - 1];
     const isDeeper = prevDepth && prevDepth < depth;
@@ -18,7 +19,7 @@ function calcA(input) {
   }, 0);
 }
 
-function calcB(input) {
+function solve2(input) {
   return input.reduce((counter, depth, index, depths) => {
     const prevDepth = depths[index - 1];
     const nextOfTheNextDepth = depths[index + 2];
@@ -28,9 +29,12 @@ function calcB(input) {
 }
 
 async function start() {
+  assert.equal(solve1([199, 200, 208, 210, 200, 207, 240, 269, 260, 263]), 7);
+  assert.equal(solve2([199, 200, 208, 210, 200, 207, 240, 269, 260, 263]), 5);
+
   const input = await readyInput();
-  console.log(calcA(input));
-  console.log(calcB(input));
+  console.log(solve1(input));
+  console.log(solve2(input));
 }
 
 start();
