@@ -14,18 +14,15 @@ function calcA(input) {
   return input.reduce((counter, depth, index, depths) => {
     const prevDepth = depths[index - 1];
     const isDeeper = prevDepth && prevDepth < depth;
-
     return isDeeper ? counter + 1 : counter;
   }, 0);
 }
 
 function calcB(input) {
-  let prevValueHolder; // Holds the previous value in every loop iteration, so we don't need to calculate it
-
   return input.reduce((counter, depth, index, depths) => {
-    const currentValue = depth + depths[index + 1] + depths[index + 2];
-    const isDeeper = prevValueHolder && currentValue && prevValueHolder < currentValue;
-    prevValueHolder = currentValue;
+    const prevDepth = depths[index - 1];
+    const nextOfTheNextDepth = depths[index + 2];
+    const isDeeper = prevDepth && nextOfTheNextDepth && prevDepth < nextOfTheNextDepth;
     return isDeeper ? counter + 1 : counter;
   }, 0);
 }
