@@ -1,7 +1,7 @@
 const assert = require('assert/strict');
 const fs = require('fs');
 
-function readyInput() {
+function readInput() {
   return new Promise((resolve) => {
     fs.readFile(`./input.txt`, 'utf8', function (err, data) {
       resolve(data.split('\n'));
@@ -87,7 +87,7 @@ async function start() {
   assert.equal(solve1(testActions), 150);
   assert.equal(solve2(testActions), 900);
 
-  const input = parseActions(await readyInput());
+  const input = parseActions(await readInput());
   console.log(solve1(input));
   console.log(solve2(input));
 }
