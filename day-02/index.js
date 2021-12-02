@@ -9,8 +9,8 @@ function readyInput() {
   })
 }
 
-function parseInstructions(instructions) {
-  return instructions.map(line => ({
+function parseActions(actions) {
+  return actions.map(line => ({
     type: line.substr(0, line.indexOf(' ')),
     value: parseInt(line.substr(line.indexOf(' ') + 1)),
   }))
@@ -85,11 +85,11 @@ function solve2(input) {
 }
 
 async function start() {
-  const testInstructions = parseInstructions(['forward 5', 'down 5', 'forward 8', 'up 3', 'down 8', 'forward 2']);
-  assert.equal(solve1(testInstructions), 150);
-  assert.equal(solve2(testInstructions), 900);
+  const testActions = parseActions(['forward 5', 'down 5', 'forward 8', 'up 3', 'down 8', 'forward 2']);
+  assert.equal(solve1(testActions), 150);
+  assert.equal(solve2(testActions), 900);
 
-  const input = parseInstructions(await readyInput());
+  const input = parseActions(await readyInput());
   console.log(solve1(input));
   console.log(solve2(input));
 }
