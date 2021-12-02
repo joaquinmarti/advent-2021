@@ -22,17 +22,17 @@ function navigate(state, action) {
   switch (action.type) {
     case 'forward':
       return {
+        ...state,
         x: state.x + action.value,
-        depth: state.depth,
       }
     case 'up':
       return {
-        x: state.x,
+        ...state,
         depth: state.depth - action.value,
       }
     case 'down':
       return {
-        x: state.x,
+        ...state,
         depth: state.depth + action.value,
       }
     default:
@@ -44,20 +44,18 @@ function navigateWithAim(state, action) {
   switch (action.type) {
     case 'forward':
       return {
+        ...state,
         x: state.x + action.value,
         depth: state.depth + state.aim * action.value,
-        aim: state.aim,
       };
     case 'up':
       return {
-        x: state.x,
-        depth: state.depth,
+        ...state,
         aim: state.aim - action.value,
       };
     case 'down':
       return {
-        x: state.x,
-        depth: state.depth,
+        ...state,
         aim: state.aim + action.value,
       };
     default:
