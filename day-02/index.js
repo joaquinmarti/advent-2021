@@ -11,7 +11,7 @@ function readyInput() {
 
 function parseInstructions(instructions) {
   return instructions.map(line => ({
-    command: line.substr(0, line.indexOf(' ')),
+    type: line.substr(0, line.indexOf(' ')),
     value: parseInt(line.substr(line.indexOf(' ') + 1)),
   }))
 }
@@ -19,7 +19,7 @@ function parseInstructions(instructions) {
 //
 
 function navigate(state, action) {
-  switch (action.command) {
+  switch (action.type) {
     case 'forward':
       return {
         x: state.x + action.value,
@@ -41,7 +41,7 @@ function navigate(state, action) {
 }
 
 function navigateWithAim(state, action) {
-  switch (action.command) {
+  switch (action.type) {
     case 'forward':
       return {
         x: state.x + action.value,
