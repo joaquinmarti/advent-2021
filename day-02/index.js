@@ -12,56 +12,56 @@ function readyInput() {
 function parseInstructions(instructions) {
   return instructions.map(line => ({
     command: line.substr(0, line.indexOf(' ')),
-    amount: parseInt(line.substr(line.indexOf(' ') + 1)),
+    value: parseInt(line.substr(line.indexOf(' ') + 1)),
   }))
 }
 
 //
 
-function navigate(position, instruction) {
-  switch (instruction.command) {
+function navigate(state, action) {
+  switch (action.command) {
     case 'forward':
       return {
-        x: position.x + instruction.amount,
-        depth: position.depth,
+        x: state.x + action.value,
+        depth: state.depth,
       }
     case 'up':
       return {
-        x: position.x,
-        depth: position.depth - instruction.amount,
+        x: state.x,
+        depth: state.depth - action.value,
       }
     case 'down':
       return {
-        x: position.x,
-        depth: position.depth + instruction.amount,
+        x: state.x,
+        depth: state.depth + action.value,
       }
     default:
-      return position;
+      return state;
   }
 }
 
-function navigateWithAim(position, instruction) {
-  switch (instruction.command) {
+function navigateWithAim(state, action) {
+  switch (action.command) {
     case 'forward':
       return {
-        x: position.x + instruction.amount,
-        depth: position.depth + position.aim * instruction.amount,
-        aim: position.aim,
+        x: state.x + action.value,
+        depth: state.depth + state.aim * action.value,
+        aim: state.aim,
       };
     case 'up':
       return {
-        x: position.x,
-        depth: position.depth,
-        aim: position.aim - instruction.amount,
+        x: state.x,
+        depth: state.depth,
+        aim: state.aim - action.value,
       };
     case 'down':
       return {
-        x: position.x,
-        depth: position.depth,
-        aim: position.aim + instruction.amount,
+        x: state.x,
+        depth: state.depth,
+        aim: state.aim + action.value,
       };
     default:
-      return position;
+      return state;
   }
 }
 
