@@ -33,12 +33,12 @@ const lessCommonBit = (bits) => +(bits[0] > bits[1]);
 function solve1(input) {
   const count = bitsCount(input, 0, input[0].length);
 
-  const power = count.reduce((power, bits) => ([
+  const [e, g] = count.reduce((power, bits) => ([
     power[0].concat(mostCommonBit(bits)),
     power[1].concat(lessCommonBit(bits)),
   ]), ['', '']);
 
-  return parseInt(power[0], 2) * parseInt(power[1], 2);
+  return parseInt(e, 2) * parseInt(g, 2);
 }
 
 function solve2(input) {
