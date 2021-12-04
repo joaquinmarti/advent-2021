@@ -7,7 +7,6 @@ function readInput(file) {
       const lines = data.split('\n\n');
       resolve({
         numbers: lines[0].split(',').map(e => parseInt(e)),
-        // boards: lines.slice(1).map(b => b.split('\n').map(l => l.split(' ').filter(c => c !== '').map(n => parseInt(n)))),
         boards: lines.slice(1).map(l => l.replace(/\n/g, ' ').replace(/  /g, ' ').trim().split(' ').map(n => parseInt(n))),
       });
     })
