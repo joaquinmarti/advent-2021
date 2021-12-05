@@ -17,7 +17,7 @@ const getDirection = (x, y) => {
 }
 
 // Returns a tuple with the number of units to sum to x and y in the loop in order to get from
-// x1,y1 to x2,y2
+// x1,y1 to x2,y2. It assumes lines are horizontal, diagonal or 45 degrees diagonal
 const getLineDirections = (line) => ([
   getDirection(line[0][0], line[1][0]),
   getDirection(line[0][1], line[1][1])
@@ -26,17 +26,19 @@ const getLineDirections = (line) => ([
 // Returns all the points of a line as a tuple
 const drawLine = (line) => {
   const [xDireciton, yDirection] = getLineDirections(line);
-  let [[x1, y1], [x2, y2]] = line;
+  let [[x, y], [lastX, lastY]] = line;
   const points = [];
 
   // Push initial point
-  points.push([x1, y1]);
+  points.push([x, y]);
 
   // Push the points from x1,y1 to x2, y2
-  while(x1 !== x2 || y1 !== y2) {
-    x1 += xDireciton;
-    y1 += yDirection;
-    points.push([x1, y1]);
+  // It assumes once x or y are equal to their last values the line is completely drawn
+  // This works just because lines can be horizontal, vertical or 45 degrees diagonal
+  while (x !== lastX || y !== lastY) {
+    x += xDireciton;
+    y += yDirection;
+    points.push([x, y]);
   }
 
   return points;
