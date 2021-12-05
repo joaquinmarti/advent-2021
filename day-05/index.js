@@ -56,7 +56,7 @@ const countOverlappingPoints = (points) => {
     }
   });
 
-  return Array.from(counter.entries()).reduce((acc, p) => acc + (p[1] > 1 ? 1 : 0), 0);
+  return Array.from(counter.entries()).filter(p => p[1] > 1).length;
 };
 
 function solve1(input) {
