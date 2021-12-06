@@ -47,11 +47,11 @@ const countFishesAfterIterations = (input, iterations) => {
 };
 
 function solve1(input, iterations) {
-  return countFishesAfterIterations(input, 80);
+  return countFishesAfterIterations(input, iterations);
 }
 
-function solve2(input) {
-  return countFishesAfterIterations(input, 256);
+function solve2(input, iterations) {
+  return countFishesAfterIterations(input, iterations);
 }
 
 async function start() {
@@ -60,8 +60,8 @@ async function start() {
   assert.equal(solve2(testInput, 256), 26984457539);
 
   const input = prepareFishesCounter(await readInput('./input.txt'));
-  console.log(solve1(input));
-  console.log(solve2(input));
+  console.log(solve1(input, 80));
+  console.log(solve2(input, 256));
 }
 
 start();
