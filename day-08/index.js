@@ -9,7 +9,7 @@ function readInput(file) {
   })
 }
 
-//
+// Original numbers
 const n = [
   'abcefg', // 0
   'cf', // 1
@@ -23,7 +23,9 @@ const n = [
   'abcdfg', // 9
 ];
 
+const sortString = (string) => string.split('').sort().join('');
 const findByLength = (pattern, d) => pattern.filter((s) => s.length === n[d].length);
+
 const findByInclude = (pattern, number, exclude) => {
   return pattern.filter((d) => {
     if (d === exclude) return false;
@@ -31,6 +33,7 @@ const findByInclude = (pattern, number, exclude) => {
     return number.split('').every((s) => segments.includes(s));
   })[0];
 };
+
 const findByOverlap = (pattern, number, exclude) => {
   const digits = number.split('');
   return pattern.filter((d) => {
@@ -40,42 +43,41 @@ const findByOverlap = (pattern, number, exclude) => {
   })[0];
 };
 
-const sortString = (string) => string.split('').sort().join('');
-
 const findMapping = (pattern) => {
   const map = [];
 
+  // Deduct first numbers from their length
   map[1] = findByLength(pattern, 1)[0];
   map[4] = findByLength(pattern, 4)[0];
   map[7] = findByLength(pattern, 7)[0];
   map[8] = findByLength(pattern, 8)[0];
 
-  // Get numbers 0, 6 and 9. They all have same length
+  // Get numbers 0, 6 and 9. They all have same length, we use 0 to compare.
   const d069 = findByLength(pattern, 0);
 
-  // Get numbers 2, 3 and 5
-  const d235 = findByLength(pattern, 3);
+  // Get numbers 2, 3 and 5. They all have same length, we use 2 to compare.
+  const d235 = findByLength(pattern, 2);
 
-  // Number 9 has same segments as 4
+  // Number 9 has same segments as 4, unlike 0 and 6
   map[9] = findByInclude(d069, map[4]);
 
-  // Number 0 has same segments as 7, excluding 9
+  // Number 0 has same segments as 7 unlike 6, excluding 9
   map[0] = findByInclude(d069, map[7], map[9]);
 
   // Number 6 is the remaining number from d069
   map[6] = d069.filter((d) => d !== map[0] && d !== map[9])[0];
 
-  // Number 3 has same segments as 7
+  // Number 3 has same segments as 7, unlike 2 and 5
   map[3] = findByInclude(d235, map[7]);
 
-  // Number 5 overlaps completely number 9, exlcluding 3
+  // Number 5 overlaps completely number 9 unlike 2, exlcluding 3
   map[5] = findByOverlap(d235, map[9], map[3]);
 
-  // Number 2 is the last one
+  // Number 2 is the last one from d235
   map[2] = d235.filter((d) => d !== map[3] && d !== map[5])[0];
 
   return map.map(sortString);
-}
+};
 
 //
 
@@ -93,8 +95,8 @@ function solve2(input) {
     const mapping = findMapping(sequence[0]);
 
     const numbers = sequence[1].map((digit) => {
-      const normalized = sortString(digit);
-      return mapping.indexOf(normalized);
+      const sortedDigit = sortString(digit);
+      return mapping.indexOf(sortedDigit);
     }).join('');
 
     return count + parseInt(numbers);
