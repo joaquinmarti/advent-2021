@@ -25,7 +25,7 @@ const getUpPointIndex = (point) => ({ indexRow: point.indexRow - 1, indexCol: po
 const getDownPointIndex = (point) => ({ indexRow: point.indexRow + 1, indexCol: point.indexCol });
 
 //
-const findAdjacentPoints = (grid, point, basinPoints) => {
+const checkAdjacent = (grid, point, basinPoints) => {
   const adjacentPoints = [
     point.indexCol > 0 ? getLeftPointIndex(point) : undefined, // left
     point.indexCol < grid[0].length - 1 ? getRightPointIndex(point) : undefined, // right
@@ -36,7 +36,7 @@ const findAdjacentPoints = (grid, point, basinPoints) => {
   adjacentPoints.forEach((point) => {
     if (point && !basinPoints.has(pointToString(point)) && !isUndefinedOr9(grid, point)) {
       basinPoints.set(pointToString(point), true);
-      findAdjacentPoints(grid, point, basinPoints);
+      checkAdjacent(grid, point, basinPoints);
     }
   });
 }
@@ -62,10 +62,10 @@ const getLowPoints = (grid) => {
   return lowPoints;
 };
 
-const getBasinlength = (grid) => (lowPoint) => {
+const getBasinLength = (grid) => (lowPoint) => {
   const basinPoints = new Map();
   basinPoints.set(pointToString(lowPoint), true);
-  findAdjacentPoints(grid, lowPoint, basinPoints);
+  checkAdjacent(grid, lowPoint, basinPoints);
   return basinPoints.size;
 };
 
@@ -77,8 +77,8 @@ function solve1(input) {
 }
 
 function solve2(input) {
-  const basinsLengths = getLowPoints(input).map(getBasinlength(input));
-  return basinsLengths.sort((a, b) => a - b).reverse().slice(0, 3).reduce((total, basin) => total * basin, 1);
+  const basinsLengths = getLowPoints(input).map(getBasinLength(input));
+  return basinsLengths.sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a * b, 1);
 }
 
 async function start() {
